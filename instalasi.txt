@@ -1,0 +1,26 @@
+# Materi Pengenalan Docker di AlmaLinux
+Fokus: praktik langsung menggunakan command line (CLI)
+
+---
+
+## 1. Install Docker di AlmaLinux 8 / 9
+
+### Update sistem
+```bash
+sudo dnf update -y
+
+install dependensi
+sudo dnf install -y dnf-utils
+
+tambahkan repository Docker
+sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+install docker engine
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+start docker engine
+sudo systemctl start docker
+sudo systemctl enable docker
+
+cek status docker
+sudo systemctl status docker
