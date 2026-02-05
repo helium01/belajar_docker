@@ -1,0 +1,138 @@
+Rekomendasi Paling Ideal (Best Practice)
+⭐ 1. /opt/ → PALING DISARANKAN untuk Docker / Service
+
+👉 Pilihan terbaik buat:
+
+Docker Compose
+
+Image custom
+
+n8n, FastAPI, backend service, dsb
+
+Project yang jalan sebagai service
+
+Contoh struktur:
+
+/opt/
+ ├── n8n/
+ │   ├── docker-compose.yml
+ │   ├── .env
+ │   └── volumes/
+ ├── ubs-rag-api/
+ │   ├── docker-compose.yml
+ │   └── app/
+ └── monitoring/
+     └── docker-compose.yml
+
+
+Kenapa /opt mantap:
+
+Memang didesain untuk optional / third-party software
+
+Nggak kecampur system files
+
+Aman dari auto cleanup
+
+Cocok buat server & production
+
+📌 Rekomendasi saya untuk kamu:
+👉 Pakai /opt/<nama-project>
+
+⭐ 2. /srv/ → Kalau Fokus “Service-oriented”
+
+Dipakai kalau project kamu:
+
+API
+
+Web service
+
+Microservice
+
+Contoh:
+
+/srv/
+ ├── api-ubs/
+ ├── web-frontend/
+ └── worker/
+
+
+Catatan:
+
+Lebih “Linux-purist”
+
+Tidak semua distro konsisten pakai ini
+
+⚙️ 3. /home/<user>/projects → Untuk Development / Eksperimen
+
+Cocok buat:
+
+Coba-coba
+
+R&D
+
+Belum production
+
+/home/helium/projects/
+ ├── docker-test/
+ ├── rag-experiment/
+ └── ci3-legacy/
+
+
+🚫 Kurang disarankan untuk production
+
+Permission bisa ribet
+
+User dependency
+
+❌ Yang Sebaiknya DIHINDARI
+Lokasi	Alasan
+/root	Berbahaya, rawan salah hapus
+/var/www	Khusus web (Apache/Nginx)
+/usr/local	Untuk binary, bukan project
+/tmp	Auto cleanup
+🐳 Khusus Docker: Pola yang Ideal
+🔹 Project location
+/opt/n8n/docker-compose.yml
+
+🔹 Volume location (best practice)
+/opt/n8n/volumes/
+
+
+atau
+
+/var/lib/n8n/
+
+✅ Contoh Setup Realistis (Mirip Setup Kamu)
+
+Karena kamu sering main:
+
+n8n
+
+FastAPI
+
+RAG
+
+Docker Swarm
+
+💡 Saya saranin:
+
+/opt/docker/
+ ├── n8n/
+ ├── postgres/
+ ├── rag-api/
+ ├── ollama/
+ └── monitoring/
+
+
+Lalu Docker pakai volume bind:
+
+volumes:
+  - /opt/docker/n8n/data:/home/node/.n8n
+
+🧠 Ringkasannya
+Use case	Lokasi
+Docker Compose (prod)	/opt/ ⭐
+Service backend	/srv
+Development	/home/user
+Binary system	/usr/local
+Web static	/var/www
